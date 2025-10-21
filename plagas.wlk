@@ -1,7 +1,14 @@
+import elementos.*
+
 class Plaga {
     var property poblacion
 
     method transmiteEnfermedades() = poblacion >= 10
+
+    method atacar(unElemento) {
+        unElemento.recibirAtaque(self)
+        poblacion = poblacion*1.1
+    }
 }
 
 class PlagaDeCucarachas inherits Plaga {
@@ -10,6 +17,11 @@ class PlagaDeCucarachas inherits Plaga {
     method nivelDeDanio() = poblacion / 2
 
     override method transmiteEnfermedades() = pesoPromedio >= 10 && super()
+
+    override method atacar(unElemento){
+        super(unElemento)
+        pesoPromedio = pesoPromedio + 2
+    }
 }
 
 class PlagaDePulgas inherits Plaga {

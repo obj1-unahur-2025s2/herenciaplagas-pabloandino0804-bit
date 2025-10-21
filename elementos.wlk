@@ -1,8 +1,13 @@
+import plagas.*
 class Hogar {
   var property nivelDeMugre
   var property confortHogar
 
   method esBueno() = nivelDeMugre <= confortHogar/2
+
+  method recibirAtaque(unaPlaga){
+    nivelDeMugre += unaPlaga.nivelDeDanio()
+  }
 }
 
 class Huerta {
@@ -10,7 +15,15 @@ class Huerta {
   
   method nivelDeProduccion() = 10
 
-  method esBueno() = capacidadDeProduccion > nivelFijo.nivelMinimo() 
+  method esBueno() = capacidadDeProduccion > nivelFijo.nivelMinimo()
+
+  method recibirAtaque(unaPlaga){
+    capacidadDeProduccion -= unaPlaga.nivelDeDanio() * 0.1
+
+    if (unaPlaga.transmiteEnfermedades()) {
+      capacidadDeProduccion -= 10
+    }
+  }
 }
 
 object nivelFijo {
@@ -18,9 +31,15 @@ object nivelFijo {
 }
 
 class Mascota {
-  const property nivelDeSalud
+  var property nivelDeSalud
 
   method esBueno() = nivelDeSalud > 250 
+
+  method recibirAtaque(unaPlaga){
+    if (unaPlaga.transmiteEnfermedades()){
+      nivelDeSalud -= unaPlaga.nivelDeDanio()
+    }
+  }
 }
 
 class Barrios {
